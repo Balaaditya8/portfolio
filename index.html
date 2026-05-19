@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+    --bg: #f9f8f5;
+    --ink: #111110;
+    --ink2: #555553;
+    --ink3: #999997;
+    --accent: #1a1a18;
+    --rule: #e2e0da;
+    --tag-bg: #efefeb;
+    --tag-ink: #444442;
+    --green: #2d6a4f;
+    --green-bg: #eaf4ee;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413;
+      --ink: #f0efe8;
+      --ink2: #aaa9a4;
+      --ink3: #666664;
+      --accent: #f0efe8;
+      --rule: #2a2a28;
+      --tag-bg: #232321;
+      --tag-ink: #c0bfb8;
+      --green: #74c69d;
+      --green-bg: #1a3028;
+    }
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 56px;
+    animation: fadeDown 0.4s ease both;
+  }
+  .nav-logo { font-family: var(--mono); font-size: 13px; color: var(--ink2); letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: var(--ink2); text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 7rem 3rem 5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--ink2); }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink2);
+    max-width: 540px;
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--ink); color: var(--bg);
+    padding: 10px 22px; border-radius: 6px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: opacity 0.15s;
+    cursor: pointer; border: none;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--rule); color: var(--ink2);
+    padding: 10px 22px; border-radius: 6px;
+    font-size: 14px; text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+    cursor: pointer; background: none;
+  }
+  .btn-ghost:hover { border-color: var(--ink2); color: var(--ink); }
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--ink2);
+  }
+  .status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+
+  .section { max-width: 900px; margin: 0 auto; padding: 5rem 3rem; border-top: 1px solid var(--rule); }
+  .section-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink3); margin-bottom: 3rem;
+  }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .about-text { font-size: 16px; color: var(--ink2); line-height: 1.75; font-weight: 300; }
+  .about-text p + p { margin-top: 1rem; }
+  .about-aside { display: flex; flex-direction: column; gap: 1.5rem; }
+  .aside-block { }
+  .aside-label { font-size: 11px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 6px; }
+  .aside-val { font-size: 15px; color: var(--ink); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .skill-cell {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 1.25rem 1.3rem;
+    background: color-mix(in srgb, var(--bg) 94%, var(--tag-bg) 6%);
+  }
+  .skill-cell-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink3);
+    margin-bottom: 0.9rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { display: inline-block; font-size: 12px; background: var(--tag-bg); color: var(--tag-ink); padding: 3px 10px; border-radius: 4px; font-family: var(--mono); }
+
+  .projects { display: flex; flex-direction: column; gap: 0; }
+  .project-row {
+    display: grid; grid-template-columns: 60px 1fr auto;
+    gap: 2rem; align-items: start;
+    padding: 2rem 0; border-bottom: 1px solid var(--rule);
+  }
+  .project-num { font-family: var(--mono); font-size: 12px; color: var(--ink3); padding-top: 4px; }
+  .project-title { font-family: var(--serif); font-size: 22px; margin-bottom: 6px; }
+  .project-desc { font-size: 14px; color: var(--ink2); max-width: 500px; line-height: 1.6; margin-bottom: 12px; font-weight: 300; }
+  .project-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .project-link { font-size: 13px; color: var(--ink2); text-decoration: none; border-bottom: 1px solid var(--rule); padding-bottom: 1px; white-space: nowrap; margin-top: 4px; }
+  .project-link:hover { color: var(--ink); border-color: var(--ink); }
+
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-row { display: grid; grid-template-columns: 180px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--rule); }
+  .exp-period { font-family: var(--mono); font-size: 12px; color: var(--ink3); padding-top: 4px; line-height: 1.6; white-space: nowrap; }
+  .exp-company { font-size: 14px; color: var(--ink2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--mono); }
+  .exp-role { font-size: 17px; font-weight: 500; margin-bottom: 10px; }
+  .exp-summary { font-size: 14px; color: var(--ink2); line-height: 1.7; font-weight: 300; margin-bottom: 0.9rem; }
+  .exp-skills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .exp-subrole + .exp-subrole { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+  .exp-subperiod { font-family: var(--mono); font-size: 11px; color: var(--ink3); letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+
+  .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .contact-headline { font-family: var(--serif); font-size: 2.5rem; line-height: 1.15; margin-bottom: 1rem; }
+  .contact-sub { font-size: 15px; color: var(--ink2); font-weight: 300; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border: 1px solid var(--rule); border-radius: 8px; text-decoration: none; color: var(--ink); transition: border-color 0.15s; }
+  .contact-link:hover { border-color: var(--ink2); }
+  .contact-link-label { font-size: 14px; font-weight: 500; }
+  .contact-link-val { font-size: 13px; color: var(--ink2); font-family: var(--mono); }
+  .arrow { font-size: 16px; color: var(--ink3); }
+
+  footer { border-top: 1px solid var(--rule); padding: 2rem 3rem; max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family: var(--mono); font-size: 12px; color: var(--ink3); }
+  .footer-copy { font-size: 12px; color: var(--ink3); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { gap: 1.25rem; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .section { padding: 3rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-row { grid-template-columns: 1fr; gap: 2rem; }
+    .project-row { grid-template-columns: 40px 1fr; }
+    .project-link { display: none; }
+    .exp-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Balaaditya Mukundan</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Software Engineer &amp; Applied AI</p>
+  <h1>Balaaditya Mukundan</h1>
+  <p class="hero-sub">I build thoughtful software systems and AI-powered products with a focus on making complex technology practical, reliable, and genuinely useful for real people.</p>
+  <div class="hero-ctas">
+    <a class="btn-primary" href="#projects">See my work →</a>
+    <a class="btn-ghost" href="#contact">Get in touch</a>
+    <span class="hero-status"><span class="status-dot"></span>Open to new roles</span>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <p class="section-label">01 — About</p>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm Balaaditya Mukundan, a software engineer based in San Diego with a background in computer science from UC San Diego. I enjoy building systems that sit at the intersection of strong engineering fundamentals and practical AI.</p>
+      <p>My recent work has ranged from building backend tool-calling infrastructure and Bedrock-powered workflows at AquaMesh to scalable internal platform tooling during my internship at Amazon.</p>
+      <p>Right now, I'm especially focused on applied AI, backend systems, and cloud-native product engineering, with an interest in building reliable software that turns complex models and data into useful real-world experiences.</p>
+    </div>
+    <div class="about-aside">
+      <div class="aside-block">
+        <div class="aside-label">Based in</div>
+        <div class="aside-val">San Diego, CA · Open to relocation</div>
+      </div>
+      <div class="aside-block">
+        <div class="aside-label">Currently</div>
+        <div class="aside-val">Open to full-time &amp; contract</div>
+      </div>
+      <div class="aside-block">
+        <div class="aside-label">Interests</div>
+        <div class="aside-val">LLM infra, RAG systems, product engineering, dev tools</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="education">
+  <p class="section-label">02 — Education</p>
+  <div class="exp-list">
+    <div class="exp-row">
+      <div class="exp-period">Master's</div>
+      <div>
+        <div class="exp-company">University of California San Diego</div>
+        <div class="exp-role">Master of Science in Computer Science</div>
+        <p class="exp-summary">GPA: 4.0 / 4.0</p>
+      </div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-period">Bachelor's</div>
+      <div>
+        <div class="exp-company">College of Engineering Guindy, Anna University</div>
+        <div class="exp-role">Bachelor of Engineering in Computer Science</div>
+        <p class="exp-summary">GPA: 4.0 / 4.0</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <p class="section-label">03 — Experience</p>
+  <div class="exp-list">
+    <div class="exp-row">
+      <div class="exp-period">April 2026 – Present</div>
+      <div>
+        <div class="exp-company">AquaMesh · San Diego, CA</div>
+        <div class="exp-role">Software Development Engineer Intern</div>
+        <p class="exp-summary">Built backend tool-calling infrastructure for an AI chatbot over real-time aquatic sensor data, creating MCP-based serverless analytics tools and integrating production-ready AWS identity and Bedrock LLM workflows on a multi-tenant IoT platform.</p>
+        <div class="exp-skills">
+          <span class="tag">AWS Lambda</span><span class="tag">DynamoDB</span><span class="tag">AppSync</span><span class="tag">AWS Amplify</span><span class="tag">Cognito</span><span class="tag">Amazon Bedrock</span><span class="tag">MCP</span>
+        </div>
+      </div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-period">Aug 2023 – May 2024</div>
+      <div>
+        <div class="exp-company">Anna University · Chennai, India</div>
+        <div class="exp-subrole">
+          <div class="exp-subperiod">Jan. 2024 – May 2024</div>
+          <div class="exp-role">Generative AI Intern</div>
+          <p class="exp-summary">Built a multimodal pipeline that turned STEM prompts into educational videos by combining fine-tuned LLM-generated Manim animations with speech synthesis and automated rendering, improving syntactic correctness and reducing generation errors by 48%.</p>
+          <div class="exp-skills">
+            <span class="tag">LLMs</span><span class="tag">Manim</span><span class="tag">Multimodal AI</span><span class="tag">Tacotron2</span><span class="tag">Python</span><span class="tag">Fine-tuning</span>
+          </div>
+        </div>
+        <div class="exp-subrole">
+          <div class="exp-subperiod">Aug 2023 – Dec 2023</div>
+          <div class="exp-role">Generative AI Research Intern</div>
+          <p class="exp-summary">Contributed to fine-tuning Meta's Llama 2 7B and 13B models on high-quality STEM datasets, then benchmarked their reasoning performance to show strong gains over several open-source LLMs while approaching more expensive closed-source systems.</p>
+          <div class="exp-skills">
+            <span class="tag">Llama 2</span><span class="tag">LLM Fine-tuning</span><span class="tag">Benchmarking</span><span class="tag">STEM Datasets</span><span class="tag">Reasoning Evaluation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-period">June 2023 – Aug 2023</div>
+      <div>
+        <div class="exp-company">Amazon · Bangalore, India</div>
+        <div class="exp-role">Software Development Engineer Intern</div>
+        <p class="exp-summary">Modernized a legacy permission provisioning workflow by reverse-engineering a Ruby on Rails system and replacing manual SQL-based operations with self-service APIs and UI flows, cutting turnaround from hours to minutes and reducing operational overhead by 50%.</p>
+        <div class="exp-skills">
+          <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Ruby on Rails</span><span class="tag">SQL</span><span class="tag">DynamoDB</span><span class="tag">Mockito</span><span class="tag">JOOQ</span>
+        </div>
+      </div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-period">Jun 2022 – May 2023</div>
+      <div>
+        <div class="exp-company">Anna University · Chennai, India</div>
+        <div class="exp-subrole">
+          <div class="exp-subperiod">Nov 2022 – May 2023</div>
+          <div class="exp-role">Software Engineer Intern (Gen AI)</div>
+          <p class="exp-summary">Explored the intersection of generative AI and augmented reality by building a pipeline that used Stable Diffusion and AR frameworks to generate and visualize AI-driven image sequences from vocal prompts in real time.</p>
+          <div class="exp-skills">
+            <span class="tag">Stable Diffusion</span><span class="tag">Generative AI</span><span class="tag">Augmented Reality</span><span class="tag">Python</span>
+          </div>
+        </div>
+        <div class="exp-subrole">
+          <div class="exp-subperiod">Jun 2022 – Oct 2022</div>
+          <div class="exp-role">Machine Learning Research Intern</div>
+          <p class="exp-summary">Researched adversarial robustness for medical image diagnosis, building PyTorch pipelines around EfficientNet-B0 and adversarial training defenses that restored classification accuracy up to 98.1% and 99.3%, leading to a peer-reviewed publication at IEEE ICCT 2023.</p>
+          <div class="exp-skills">
+            <span class="tag">PyTorch</span><span class="tag">EfficientNet-B0</span><span class="tag">Adversarial ML</span><span class="tag">Medical Imaging</span><span class="tag">DeepFool</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <p class="section-label">04 — Skills</p>
+  <div class="skills-grid">
+    <div class="skill-cell">
+      <div class="skill-cell-label">Core Languages</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span><span class="tag">Java</span><span class="tag">Go</span><span class="tag">C++</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-cell-label">Backend &amp; APIs</div>
+      <div class="skill-tags">
+        <span class="tag">Spring Boot</span><span class="tag">Flask</span><span class="tag">FastAPI</span><span class="tag">Node.js</span><span class="tag">Ruby on Rails</span><span class="tag">Gin</span><span class="tag">GraphQL</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-cell-label">Frontend &amp; Interface</div>
+      <div class="skill-tags">
+        <span class="tag">React</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Tailwind</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-cell-label">Databases &amp; Storage</div>
+      <div class="skill-tags">
+        <span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">DynamoDB</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-cell-label">Cloud Platforms</div>
+      <div class="skill-tags">
+        <span class="tag">AWS</span><span class="tag">Azure</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-cell-label">Infrastructure &amp; Delivery</div>
+      <div class="skill-tags">
+        <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">CI/CD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <p class="section-label">05 — Projects</p>
+  <div class="projects">
+    <div class="project-row">
+      <div class="project-num">01</div>
+      <div>
+        <div class="project-title">API Abuse Protection Gateway</div>
+        <div class="project-desc">Built a high-throughput multi-tenant API gateway in Go for concurrent request handling, abuse detection, and rate limiting, sustaining 6.7k req/sec at under 40ms p95 latency in load tests.</div>
+        <div class="project-tags">
+          <span class="tag">Go</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span>
+        </div>
+      </div>
+      <a class="project-link" href="https://github.com/Balaaditya8/API-Abuse-Protection-Gateway" target="_blank" rel="noopener">GitHub →</a>
+    </div>
+    <div class="project-row">
+      <div class="project-num">02</div>
+      <div>
+        <div class="project-title">Voice of Customer Platform</div>
+        <div class="project-desc">Created an event-driven platform that centralizes multi-source customer feedback into a real-time analytics pipeline, reliably processing 10K+ events per day for search, monitoring, and product insight.</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Streamlit</span>
+        </div>
+      </div>
+      <a class="project-link" href="https://github.com/Balaaditya8/Voice-of-Customer" target="_blank" rel="noopener">GitHub →</a>
+    </div>
+    <div class="project-row">
+      <div class="project-num">03</div>
+      <div>
+        <div class="project-title">Azure Cloud-Native Intoxication Detection</div>
+        <div class="project-desc">Built a real-time telemetry and prediction system on Azure that processed 1,000+ events per minute from distributed mobile sensors, paired with a React dashboard for low-latency visualization.</div>
+        <div class="project-tags">
+          <span class="tag">Azure IoT Hub</span><span class="tag">Azure Functions</span><span class="tag">SQL</span><span class="tag">React</span>
+        </div>
+      </div>
+      <a class="project-link" href="https://github.com/gokulg02/Azure-Cloud-Based-Intoxication-Monitoring-with-IoT-and-ML" target="_blank" rel="noopener">GitHub →</a>
+    </div>
+    <div class="project-row">
+      <div class="project-num">04</div>
+      <div>
+        <div class="project-title">RAG-Based Personal Knowledge Engine</div>
+        <div class="project-desc">Developed an on-device AI knowledge system for semantic note retrieval and private local Q&amp;A, improving retrieval accuracy by 25% over keyword search while keeping all inference on the machine.</div>
+        <div class="project-tags">
+          <span class="tag">React</span><span class="tag">Tailwind</span><span class="tag">Flask</span><span class="tag">Ollama</span><span class="tag">RAG</span>
+        </div>
+      </div>
+      <a class="project-link" href="https://github.com/Balaaditya8/second-brain" target="_blank" rel="noopener">GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <p class="section-label">06 — Contact</p>
+  <div class="contact-row">
+    <div>
+      <div class="contact-headline">Let's build<br>something.</div>
+      <div class="contact-sub">I'm open to full-time roles, contract work, and interesting conversations. Response time: usually same day.</div>
+      <a class="btn-primary" href="mailto:bmukundan@ucsd.edu">Send me an email →</a>
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:bmukundan@ucsd.edu">
+        <span>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-val">bmukundan@ucsd.edu</div>
+        </span>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/balaaditya-mukundan/" target="_blank" rel="noopener">
+        <span>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">linkedin.com/in/balaaditya-mukundan</div>
+        </span>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://github.com/Balaaditya8" target="_blank" rel="noopener">
+        <span>
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-val">github.com/Balaaditya8</div>
+        </span>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="contact-link" href="./resume.pdf" target="_blank" rel="noopener">
+        <span>
+          <div class="contact-link-label">Resume</div>
+          <div class="contact-link-val">PDF, updated May 2026</div>
+        </span>
+        <span class="arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Balaaditya Mukundan</span>
+  <span class="footer-copy">Designed &amp; built · 2025</span>
+</footer>
+
+</body>
+</html>
